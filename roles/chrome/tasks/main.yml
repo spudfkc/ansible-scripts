@@ -1,0 +1,12 @@
+---
+
+  - name: Add Google apt key
+    sudo: True
+    shell: 'wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+
+  - name: Add Google repo
+    sudo: True
+    shell: 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
+
+  - name: Install Chrome
+    apt: pkg=google-chrome-stable state=installed update_cache=yes

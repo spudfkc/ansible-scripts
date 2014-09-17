@@ -1,0 +1,20 @@
+---
+
+  - name: Install vim
+    sudo: True
+    apt: pkg=vim state=latest update_cache=yes
+
+  - name: Ensure pathogen prereq 
+    file: path=/home/{{ username }}/.vim/autoload state=directory
+
+  - name: Ensure pathogen prereq
+    file: path=/home/{{ username }}/.vim/bundle state=directory
+
+  - name: Install pathogen
+    command: "curl -LSso /home/{{ username }}/autoload/pathogen.vim https://tpo.pe/pathogen.vim"
+    
+  - name: Create .vimrc file for user
+    template: src=vimrc dest=/home/{{ username }}/.vimrc owner={{ username }} mode="u+rw,g-rwx,o-rwx"
+    
+  - name: Install Monokai color theme
+    template: src=Monokai.vim dest=/home/{{ username }}/.vim/colors

@@ -1,0 +1,24 @@
+---
+  - name: Download latest nodejs source
+    get_url: url=http://nodejs.org/dist/node-latest.tar.gz dest=/tmp
+
+  - name: Extract
+    command: tar xz --strip-components=1
+
+  - name: ensure install dir exists
+    file: path=~/local state=directory
+
+  - name: cd
+    command: cd node-latest-install
+
+  - name: Configure
+    command: ./configure --prefix=~/local
+
+  - name: Make and install
+    command: make && make install 
+
+  - name: Download NPM installer
+    get_url: url=https://www.npmjs.org/install.sh dest=/tmp/npm-install.sh
+
+  - name: Install NPM
+    command: sh /tmp/npm-install.sh

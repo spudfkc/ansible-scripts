@@ -1,0 +1,28 @@
+---
+  - name: Install utils
+    sudo: True
+    apt: name={{ item }} state=present update_cache=true
+    with_items:
+      - screen
+      - tree
+      - ack-grep
+      - git
+      - git-gui
+      - virtualbox
+      - mercurial
+
+  - name: Move ack to ack-old
+    sudo: True
+    command: mv /usr/bin/ack /usr/bin/ack-old
+    ignore_errors: True
+
+  - name: Link ack-grep to ack
+    sudo: True
+    command: ln -s /usr/bin/ack-grep /usr/bin/ack
+
+  - name: Download Vagrant
+    get_url: url=https://dl.bintray.com/mitchellh/vagrant/vagrant_1.6.5_x86_64.deb dest=/tmp
+
+  - name: Install Vagrant
+    sudo: True
+    apt: deb=/tmp/vagrant_1.6.5_x86_64.deb state=present

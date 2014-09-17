@@ -1,0 +1,16 @@
+# source: https://github.com/mheap/ansible-workstation-setup
+---
+
+- name: Add apt key
+  sudo: True
+  apt_key: id=94558F59 keyserver=keyserver.ubuntu.com state=present
+
+- name: Add Spotify repo
+  apt_repository: repo='deb http://repository.spotify.com stable non-free' state=present
+  sudo: True
+
+- name: Install Spotify
+  sudo: True
+  apt: pkg=spotify-client state=latest update_cache=yes
+
+
