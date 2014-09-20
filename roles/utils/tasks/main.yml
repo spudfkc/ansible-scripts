@@ -10,6 +10,10 @@
       - git-gui
       - virtualbox
       - mercurial
+      - s3cmd
+      - vlc
+      - openssh-sever
+      - openvpn
 
   - name: Move ack to ack-old
     sudo: True
@@ -25,4 +29,4 @@
 
   - name: Install Vagrant
     sudo: True
-    apt: deb=/tmp/vagrant_1.6.5_x86_64.deb state=present
+    apt: deb=/tmp/vagrant_1.6.5_x86_64.deb

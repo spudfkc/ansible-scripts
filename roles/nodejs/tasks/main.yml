@@ -1,24 +1,31 @@
 ---
   - name: Download latest nodejs source
-    get_url: url=http://nodejs.org/dist/node-latest.tar.gz dest=/tmp
+    get_url: url=http://nodejs.org/dist/node-latest.tar.gz dest=/tmp/node-latest.tar.gz
 
   - name: Extract
-    command: tar xz --strip-components=1
+    unarchive: src=./node-latest.tar.gz dest=/tmp copy=no
 
   - name: ensure install dir exists
-    file: path=~/local state=directory
-
-  - name: cd
-    command: cd node-latest-install
+    sudo: True
+    file: path=/home/{{ username }}/local state=directory
 
   - name: Configure
-    command: ./configure --prefix=~/local
+    command: chdir=/tmp/node-latest-install ./configure --prefix=/home/{{ username }}/local
 
-  - name: Make and install
-    command: make && make install 
+  - name: Make
+    command: chdir=/tmp/node-latest-install make
+
+  - name: Make Install
+    sudo: True
+    command: chdir=/tmp/node-latest-install make install
 
   - name: Download NPM installer
     get_url: url=https://www.npmjs.org/install.sh dest=/tmp/npm-install.sh
 
   - name: Install NPM
-    command: sh /tmp/npm-install.sh
+    sudo: True
+    command: chdir=/tmp sh ./npm-install.sh
+
+  - name: Chown ~
+    sudo: True
+    command: chown -R {{ username }}:{{ username }} /home/{{ username }}/
