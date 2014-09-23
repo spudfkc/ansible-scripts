@@ -1,0 +1,14 @@
+---
+
+  - name: working directory exists
+  - file: path=/opt/golang state=directory
+
+  - name: clone golang repo
+  - hg: repo=https://code.google.com/p/go dest=/opt/golang force=yes 
+
+  - name: build golang
+  - command: 'cd /opt/golang/go/src && ./all.bash'
+
+  - name: set GOPATH
+
+  - name: install additional tools
