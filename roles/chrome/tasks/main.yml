@@ -9,4 +9,5 @@
     shell: 'echo "deb http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
 
   - name: Install Chrome
+    sudo: True
     apt: pkg=google-chrome-stable state=installed update_cache=yes
