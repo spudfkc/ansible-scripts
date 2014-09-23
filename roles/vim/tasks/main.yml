@@ -13,17 +13,22 @@
     sudo: True
     file: path=/home/{{ username }}/.vim/bundle state=directory
 
+  - name: Ensure colors prereq
+    sudo: True
+    file: path=/home/{{ username }}/.vim/colors state=directory
+
   - name: Install pathogen
     sudo: True
     get_url: dest=/home/{{ username }}/.vim/autoload/pathogen.vim url=https://tpo.pe/pathogen.vim
-    
+
   - name: Create .vimrc file for user
     sudo: True
     template: src=vimrc dest=/home/{{ username }}/.vimrc
-    
+
   - name: Install Monokai color theme
     sudo: True
     template: src=Monokai.vim dest=/home/{{ username }}/.vim/colors
 
   - name: chown
+    sudo: True
     command: chown -R {{ username }}:{{ username }} /home/{{ username }}/
