@@ -1,14 +1,28 @@
 ---
+  - name: install mercurial
+    sudo: yes
+    apt: pkg=mercurial state=latest
 
   - name: working directory exists
-  - file: path=/opt/golang state=directory
+    sudo: yes
+    file: path=/opt/golang state=directory mode=777
+
+  - name: add known_hosts
+    command: ssh-keyscan code.google.com >> /etc/ssh/ssh_known_hosts
 
   - name: clone golang repo
-  - hg: repo=https://code.google.com/p/go dest=/opt/golang force=yes 
+    hg: repo=https://code.google.com/p/go dest=/opt/golang force=yes 
 
   - name: build golang
-  - command: 'cd /opt/golang/go/src && ./all.bash'
+    command: '/bin/sh all.bash'
+    args: 
+      chdir: /opt/golang
+
+  - name: make GOPATH dir
+    file: path=/home/{{ username }}/go-projects
 
   - name: set GOPATH
+    command: /bin/echo export GOPATH=/home/{{ username }}/go-projects
 
   - name: install additional tools
+    command: go get code.google.com/p/go.tools/cmd/...
