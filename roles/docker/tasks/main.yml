@@ -1,25 +1,17 @@
 ---
   # dependency
   - name: Install pycurl dep
-    sudo: True
+    sudo: yes
     apt: pkg=python-pycurl update_cache=yes state=latest
 
-#  - name: Add Docker Key
-#    sudo: True
-#    apt_key: url=https://get.docker.io/gpg state=present
-#
-#  - name: Add Docker Repo
-#    sudo: True
-#    apt_repository: repo='deb https://get.docker.io/ubuntu docker main' update_cache=yes state=present
-#
-#  - name: Install Docker
-#    sudo: True
-#    apt: pkg=lxc-docker update_cache=yes state=latest
-#
-
   - name: Add docker apt repository key
-    apt_key: url=https://get.docker.io/gpg state=present
+    sudo: yes
+    shell: apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 36A1D7869245C8950F966E92D8576A8BA88D21E9
+
   - name: Add docker apt repository
+    sudo: yes
     apt_repository: repo='deb http://get.docker.io/ubuntu docker main' state=present
+
   - name: Install latest docker via apt
+    sudo: yes
     apt: pkg=lxc-docker state=latest update_cache=yes
