@@ -31,4 +31,9 @@
 
   - name: chown
     sudo: True
-    command: chown -R {{ username }}:{{ username }} /home/{{ username }}/
+    command: chown -R {{ username }}:{{ username }} /home/{{ username }}/.vimrc
+
+  - name: chown .vim
+    sudo: True
+    command: chown -R {{ username }}:{{ username }} /home/{{ username }}/.vim
+
